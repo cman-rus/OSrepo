@@ -106,6 +106,10 @@ while(<F>)
         # crc
         print O chr($crc4);
     }
+    elsif($i == 0x600)
+    {
+        last;
+    }
     else
     {
        print O $_;
@@ -126,8 +130,11 @@ close F;
 $z = $l % 512;
 $z = 512 - $z;
 
-for(0..$z)
+if($z!=0)
+{
+for(1..$z)
 {
 	print O chr(0);
+}
 }
 close O;
