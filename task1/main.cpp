@@ -20,21 +20,21 @@ void do_cat(const char *name)
 
 	int i;
 	int a;
+	try
+        {
 	while((a = fscanf(myfile, "%d", &i)) != EOF)
 		if(a > 0)
-			try
-			{
-				myvector.push_back(i);
-			}
-			catch (exception e)
-			{
-				printf("ERR: \"%s\" - big size\n", name);
-			}
+			myvector.push_back(i);
 		else
 		{
 			printf("ERR: \"%s\" - bad content\n", name);
 			break;
 		}
+	}
+        catch (exception e)
+        {
+        	printf("ERR: \"%s\" - big size\n", name);
+        }
 
 	if(fclose(myfile) == EOF)
 		printf("ERR: \"%s\" - file can't close\n", name);
