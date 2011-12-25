@@ -1,7 +1,5 @@
 #include<stdio.h>
-
-const int size = 10;
-const int sT = 4;
+#include "main.h"
 
 volatile int a[1<<size][1<<size];
 volatile int b[1<<size][1<<size];
