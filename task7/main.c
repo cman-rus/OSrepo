@@ -9,7 +9,8 @@ int main()
 	monitor_write(0, str2);
 	
 	init_descriptor_tables();
-	
-	asm volatile("int $0x4");
+
+	int a= 2/0;	
+//	asm volatile("int $0x3");
 	return 0;
 }
