@@ -58,9 +58,9 @@ start:
 	pop	ax
 	and	ax, 0F000h
 	cmp	ax, 0
-	je	ok32
+	je	ok322
 	cmp	ax, 0F000h
-	je	ok32
+	je	ok322
 ;------i386---------------------
         mov     cx, sp
         sub     cx, 4
@@ -78,6 +78,7 @@ n32:    mov     bp,not32str
         jmp     @a
 ok32:
         popfd
+ok322:
         mov     ecx, 0
         xor     di, di
 _tab:
