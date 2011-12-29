@@ -10,7 +10,6 @@ int main()
 	
 	init_descriptor_tables();
 
-	int a= 2/0;	
-//	asm volatile("int $0x3");
+	asm volatile("int $0x3");
 	return 0;
 }

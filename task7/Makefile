@@ -6,7 +6,7 @@
 SOURCES=f.o main.o common.o monitor.o gdt.o isr.o interrupt.o descriptor_tables.o 
 
 CFLAGS=-nostdlib -nostdinc -fno-builtin -fno-stack-protector -m32 -march=i386 
-LDFLAGS=--oformat elf32_i386 -m elf_i386 -Tlink.ld
+LDFLAGS=--oformat elf32-i386 -m elf_i386 -Tlink.ld
 ASFLAGS=-felf
 
 all: $(SOURCES) link

@@ -47,11 +47,11 @@ isr6:
   push byte 6         ; Push the interrupt number (0)
   jmp isr_common_stub 
 
-[GLOBAL isr7]
-isr7:
+[GLOBAL isr9]
+isr9:
   cli                 ; Disable interrupts
   push byte 0         ; Push a dummy error code (if ISR0 doesn't push it's own error code)
-  push byte 7         ; Push the interrupt number (0)
+  push byte 9         ; Push the interrupt number (0)
   jmp isr_common_stub 
 
 
@@ -59,25 +59,26 @@ isr7:
 extern isr_handler
 
 isr_common_stub:
-    pusha
-    push ds
-    push es
-    push fs
-    push gs
-    mov ax, 0x10   ; Load the Kernel Data Segment descriptor!
+    pusha                    ; Pushes edi,esi,ebp,esp,ebx,edx,ecx,eax
+
+    mov ax, ds               ; Lower 16-bits of eax = ds.
+    push eax                 ; save the data segment descriptor
+
+    mov ax, 0x10  ; load the kernel data segment descriptor
     mov ds, ax
     mov es, ax
     mov fs, ax
     mov gs, ax
-    mov eax, esp   ; Push us the stack
-    push eax
-    mov eax, isr_handler
-    call eax       ; A special call, preserves the 'eip' register
-    pop eax
-    pop gs
-    pop fs
-    pop es
-    pop ds
-    popa
+
+    call isr_handler
+
+    pop ebx        ; reload the original data segment descriptor
+    mov ds, bx
+    mov es, bx
+    mov fs, bx
+    mov gs, bx
+
+    popa                     ; Pops edi,esi,ebp...
     add esp, 8     ; Cleans up the pushed error code and pushed ISR number
-    iret           ; pops 5 things at once: CS, EIP, EFLAGS, SS, and ESP!
+    sti
+    iret  

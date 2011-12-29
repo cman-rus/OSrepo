@@ -28,4 +28,5 @@ extern void isr3 ();
 extern void isr4 ();
 extern void isr5 ();
 extern void isr6 ();
-extern void isr7 ();
+
+extern void isr9 ();
