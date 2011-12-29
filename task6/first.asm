@@ -14,8 +14,9 @@ start:
 	mov	bx, 0x8000
 	mov	ch, 0
 	mov	cl, 2	
-	sti
 	int	13h
+	
+	jc      @err
 
 	lgdt	[limit]
 	
@@ -33,9 +34,10 @@ sta2:
 
 	mov	ss, ax
 	mov	esp, 0x7fff
+	sti
 
 	call	0x8000
-
+@err:
 	cli
 	hlt
 
