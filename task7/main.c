@@ -1,15 +1,18 @@
 #include "monitor.h"
 #include "descriptor_tables.h"
 
-int main()
+int main(struct multiboot *mboot_ptr)
 {
-	monitor_clear();
+    init_descriptor_tables();
+    monitor_clear();
+    monitor_write("Hello, world!\n");
 
-	char str2[30]="Hello, Test program there!";
-	monitor_write(0, str2);
-	
-	init_descriptor_tables();
+    asm volatile("int $0x0");
+    asm volatile("int $0x0");
+    asm volatile("int $0x3");
+    asm volatile("int $0x4");
+    asm volatile("int $0x5");
+    asm volatile("int $0x6");
 
-	asm volatile("int $0x3");
-	return 0;
+    return 0;
 }

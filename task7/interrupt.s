@@ -1,60 +1,52 @@
-[GLOBAL isr0]
-isr0:
-  cli                 ; Disable interrupts
-  push byte 0         ; Push a dummy error code (if ISR0 doesn't push it's own error code)
-  push byte 0         ; Push the interrupt number (0)
-  jmp isr_common_stub 
+%macro ISR_NOERRCODE 1
+  global isr%1
+  isr%1:
+    cli                         ; Disable interrupts firstly.
+    push byte 0                 ; Push a dummy error code.
+    push byte %1                ; Push the interrupt number.
+    jmp isr_common_stub         ; Go to our common handler code.
+%endmacro
 
-[GLOBAL isr1]
-isr1:
-  cli                 ; Disable interrupts
-  push byte 0         ; Push a dummy error code (if ISR0 doesn't push it's own error code)
-  push byte 1         ; Push the interrupt number (0)
-  jmp isr_common_stub
- 
-[GLOBAL isr2]
-isr2:
-  cli                 ; Disable interrupts
-  push byte 0         ; Push a dummy error code (if ISR0 doesn't push it's own error code)
-  push byte 2         ; Push the interrupt number (0)
-  jmp isr_common_stub
- 
-[GLOBAL isr3]
-isr3:
-  cli                 ; Disable interrupts
-  push byte 0         ; Push a dummy error code (if ISR0 doesn't push it's own error code)
-  push byte 3         ; Push the interrupt number (0)
-  jmp isr_common_stub
+%macro ISR_ERRCODE 1
+  global isr%1
+  isr%1:
+    cli                         ; Disable interrupts.
+    push byte %1                ; Push the interrupt number
+    jmp isr_common_stub
+%endmacro
 
-[GLOBAL isr4]
-isr4:
-  cli                 ; Disable interrupts
-  push byte 0         ; Push a dummy error code (if ISR0 doesn't push it's own error code)
-  push byte 4         ; Push the interrupt number (0)
-  jmp isr_common_stub 
-
-[GLOBAL isr5]
-isr5:
-  cli                 ; Disable interrupts
-  push byte 0         ; Push a dummy error code (if ISR0 doesn't push it's own error code)
-  push byte 5         ; Push the interrupt number (0)
-  jmp isr_common_stub 
-
-[GLOBAL isr6]
-isr6:
-  cli                 ; Disable interrupts
-  push byte 0         ; Push a dummy error code (if ISR0 doesn't push it's own error code)
-  push byte 6         ; Push the interrupt number (0)
-  jmp isr_common_stub 
-
-[GLOBAL isr9]
-isr9:
-  cli                 ; Disable interrupts
-  push byte 0         ; Push a dummy error code (if ISR0 doesn't push it's own error code)
-  push byte 9         ; Push the interrupt number (0)
-  jmp isr_common_stub 
-
-
+ISR_NOERRCODE 0
+ISR_NOERRCODE 1
+ISR_NOERRCODE 2
+ISR_NOERRCODE 3
+ISR_NOERRCODE 4
+ISR_NOERRCODE 5
+ISR_NOERRCODE 6
+ISR_NOERRCODE 7
+ISR_NOERRCODE   8
+ISR_NOERRCODE 9
+ISR_ERRCODE   10
+ISR_ERRCODE   11
+ISR_ERRCODE   12
+ISR_ERRCODE   13
+ISR_ERRCODE   14
+ISR_NOERRCODE 15
+ISR_NOERRCODE 16
+ISR_NOERRCODE 17
+ISR_NOERRCODE 18
+ISR_NOERRCODE 19
+ISR_NOERRCODE 20
+ISR_NOERRCODE 21
+ISR_NOERRCODE 22
+ISR_NOERRCODE 23
+ISR_NOERRCODE 24
+ISR_NOERRCODE 25
+ISR_NOERRCODE 26
+ISR_NOERRCODE 27
+ISR_NOERRCODE 28
+ISR_NOERRCODE 29
+ISR_NOERRCODE 30
+ISR_NOERRCODE 31
  
 extern isr_handler
 
@@ -81,4 +73,4 @@ isr_common_stub:
     popa                     ; Pops edi,esi,ebp...
     add esp, 8     ; Cleans up the pushed error code and pushed ISR number
     sti
-    iret  
+    iret           ; pops 5 things at once: CS, EIP, EFLAGS, SS, and ESP

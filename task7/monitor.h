@@ -7,6 +7,6 @@ void monitor_put(char c);
 
 void monitor_clear();
 
-void monitor_write(int n1, char *c);
+void monitor_write(char *c);
 
-#endif
+#endif // MONITOR_H
