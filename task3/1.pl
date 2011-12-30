@@ -33,6 +33,7 @@ $asm = '
 
         org     0x7C00
 
+	cli
         jmp     0x0:start
 start:
         push    cs
