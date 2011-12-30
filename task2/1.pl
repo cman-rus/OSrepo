@@ -2,38 +2,41 @@
 
 open F, "tmp123" or die "can't read file: $!";
 binmode F;
-$/=\1;
+$/=\512;
 $i=0;
 $z=0;
 while(<F>)
 {
-	$a=$_;
-	$i++;
-	while($a eq chr(hex("55")))
+	for(split '', $_)
 	{
-		$a=<F>;
+		$a=$_;
 		$i++;
-		if($a eq chr(hex("aa")))
+		while($a eq chr(hex("55")))
 		{
-			print $i, "\n";
-			$l=$i if($i > 511);
-		}
-		if($l>511)
-		{
-			$a[$z] = $l;
-			++$z;
+			$a=<F>;
+			$i++;
+			if($a eq chr(hex("aa")))
+			{
+				print $i, "\n";
+				$l=$i if($i > 511);
+			}
+			if($l>511)
+			{
+				$a[$z] = $l;
+				++$z;
+			}
 		}
 	}
 }
 
-close F;
+close F or die "can't close file: $!";;
 
-
+$/=\1;
 for(@a)
 {
 	$l = $_;	
 
-	open F, "tmp123" or die "can't read file: $!";
+	open F, "tmp123" or die "can't open read file: $!";
 	binmode F;
 
 	$d = $l - 512;
@@ -44,7 +47,7 @@ for(@a)
 		$_=<F>;
 	}
 
-	open W, ">bin123".$l or die "can't write file: $!";
+	open W, ">bin123".$l or die "can't open write file: $!";
 	binmode W;
 	$\="";
 	$d=512;
@@ -52,8 +55,8 @@ for(@a)
 	{
 		$d--;
 		$_=<F>;
-		print W $_;
+		(print W $_) or die "can't write file: $!";;
 	}
-	close W;
-	close F;
+	close W or die "can't close file: $!";;
+	close F or die "can't close file: $!";;
 }
