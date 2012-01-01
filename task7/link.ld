@@ -1,7 +1,11 @@
-ENTRY(start)
 SECTIONS
 {
-
+    .go32 0x8200 :
+    {
+        code = .; _code = .; __code = .;
+        *(.go32)
+        . = ALIGN(4096);
+    }
     .text 0x9000 :
     {
         code = .; _code = .; __code = .;

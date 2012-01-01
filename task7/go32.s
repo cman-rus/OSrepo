@@ -1,6 +1,8 @@
-	org	0x8200
+	bits	16
+section	.go32	
 
 	cli
+
 
 	lgdt	[limit]
 	
@@ -39,6 +41,3 @@ t1:
 limit	dw	24
 base	dd	t1
 
-	times	3584-($-$$) db 0
-
-e:
