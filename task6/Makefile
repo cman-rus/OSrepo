@@ -1,6 +1,6 @@
 SOURCES=t.o
 
-CFLAGS=-m32 -march=i386 -std=c99
+CFLAGS=-c -m32 -march=i386 -std=c99
 LDFLAGS=--oformat elf32-i386 -m elf_i386 -Ttmp
 
 all: $(SOURCES) link
@@ -16,4 +16,4 @@ link:
 
 
 .c.o:
-	gcc -c $(CFLAGS) $<
+	gcc $(CFLAGS) $<
