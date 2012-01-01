@@ -16,4 +16,4 @@ link:
 
 
 .c.o:
-	gcc $(CFLAGS) $<
+	gcc -c $(CFLAGS) $<
