@@ -1,7 +1,7 @@
 
 print "Begin testing...\n\n";
 
-for(8..12)
+for(8..11)
 {
 	$s=$_;
 	print "-------------------------------------------\nSize: $s\n";
@@ -12,9 +12,9 @@ for(8..12)
 
 	`make`;
 	print "\tR:";
-        print `time ./main 2`;
+        print `time ./main`;
 	print "\n";
-	for(2..6)
+	for(1..7)
 	{
 		$st = $_;
 		open F, ">main.h";
@@ -24,7 +24,9 @@ for(8..12)
 		`make`;
 		
 		print "\tT=$st:";
-		print `time ./main`;
+		print `time ./main 2`;
+                print "\tTmy=$st:";
+                print `time ./main 2 2`;
 		print "\n";
 	}
 }
